@@ -24,12 +24,13 @@ package com
 			this.loaderInfo.addEventListener(Event.COMPLETE, this.loadComplete);
 			
 			stop();
+			_progress.scaleX = 0;
 		}
 		
 		protected function loadProgress(e:ProgressEvent):void
 		{
 			var perc:Number = e.bytesLoaded / e.bytesTotal;
-			trace(perc);
+			_progress.scaleX = perc;
 		}
 		
 		protected function loadComplete(e:* = null):void
