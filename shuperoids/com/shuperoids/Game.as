@@ -3,6 +3,7 @@ package com.shuperoids
 	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.events.KeyboardEvent;
+	import flash.ui.Keyboard;
 	/**
 	 * @name Game
 	 * Main engine for the game. Tells objects to move appropriately and 
@@ -18,6 +19,7 @@ package com.shuperoids
 			this.addEventListener(KeyboardEvent.KEY_DOWN, this.keyDown);
 			this.addEventListener(KeyboardEvent.KEY_UP, this.keyUp);
 			this.addEventListener(Event.ENTER_FRAME, this.run);
+			this.focusRect = false;
 			this.stage.focus = this;
 		}
 		
@@ -28,13 +30,21 @@ package com.shuperoids
 		private function run(e:* = null):void
 		{
 			this.stage.focus = this;
+			Ship.instance.run();
 		}
 		
 		public function keyDown(e:KeyboardEvent):void
 		{
 			switch(e.keyCode)
 			{
-				
+				case Keyboard.A:
+				case Keyboard.LEFT:
+					Ship.instance.spinLeft = true;
+				break;
+				case Keyboard.D:
+				case Keyboard.RIGHT:
+					Ship.instance.spinRight = true;
+				break;
 				default:
 					
 				break;
@@ -45,7 +55,14 @@ package com.shuperoids
 		{
 			switch(e.keyCode)
 			{
-				
+				case Keyboard.A:
+				case Keyboard.LEFT:
+					Ship.instance.spinLeft = false;
+				break;
+				case Keyboard.D:
+				case Keyboard.RIGHT:
+					Ship.instance.spinRight = false;
+				break;
 				default:
 					
 				break;
