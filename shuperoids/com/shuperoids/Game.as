@@ -12,6 +12,10 @@ package com.shuperoids
 	
 	public class Game extends Sprite
 	{
+		public static const TOP_WALL:Number = 0;
+		public static const BOTTOM_WALL:Number = 400;
+		public static const LEFT_WALL:Number = 0;
+		public static const RIGHT_WALL:Number = 550;
 		
 		
 		public function Game():void

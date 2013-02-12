@@ -19,6 +19,8 @@ package com.shuperoids
 		{
 			this.spinLeft ? this.rotateLeft():null;
 			this.spinRight ? this.rotateRight():null;
+			
+			super.run();
 		}
 		
 		public function rotateLeft():void
