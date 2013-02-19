@@ -6,7 +6,6 @@ package com.shuperoids
 	{
 		protected var vx:Number = 0;
 		protected var vy:Number = 0;
-		protected var _speed:Number = 0;
 		
 		public function GameObject():void
 		{
@@ -38,23 +37,27 @@ package com.shuperoids
 		
 		public function get speed():Number
 		{
-			return this._speed;
+			var asq:Number = this.vx * this.vx;
+			var bsq:Number = this.vy * this.vy;
+			var csq:Number = asq + bsq;
+			return Math.sqrt(csq);
 		}
 		
 		public function set speed(n:Number):void
 		{
-			this._speed = n;
+			this.vx = Math.cos(this.rotation * Math.PI / 180) * n;
+			this.vy = Math.sin(this.rotation * Math.PI / 180) * n;
 		}
 		
-		public function get direction():Number
+		public function get direction():Number //in radians
 		{
-			return this.rotation;
+			return Math.atan2(this.vy, this.vx);
 		}
 		
-		public function set direction(n:Number):void
+		/*public function set direction(n:Number):void
 		{
 			this.rotation = n;
-		}
+		}*/
 	}
 }
 
