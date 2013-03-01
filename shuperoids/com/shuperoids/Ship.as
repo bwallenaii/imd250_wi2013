@@ -10,6 +10,7 @@ package com.shuperoids
 		private var _spinRight:Boolean = false;
 		private var _thrust:Boolean = false;
 		private var _fire:Boolean = false;
+		private var _slow:Boolean = false;
 		private var weapon:Weapon;
 		private var acceleration:Number = 0.5;
 		private var topSpeed:Number = 6;
@@ -25,7 +26,7 @@ package com.shuperoids
 			this.spinLeft ? this.rotateLeft():null;
 			this.spinRight ? this.rotateRight():null;
 			this.thrust ? this.moveShip():null;
-			
+			this.slow ? this.slowShip():null;
 			super.run();
 			this.fire ? this.weapon.fire():null;
 		}
@@ -39,6 +40,12 @@ package com.shuperoids
 			}
 			this.vx += Math.cos(this.rotation * (Math.PI / 180)) * this.acceleration;
 			this.vy += Math.sin(this.rotation * (Math.PI / 180)) * this.acceleration;
+		}
+		
+		public function slowShip():void
+		{
+			this.vx -= Math.cos(this.direction) * this.acceleration / 2;
+			this.vy -= Math.sin(this.direction) * this.acceleration / 2;
 		}
 		
 		public function rotateLeft():void
@@ -94,6 +101,16 @@ package com.shuperoids
 		public function get fire():Boolean
 		{
 			return this._fire;
+		}
+		
+		public function set slow(b:Boolean):void
+		{
+			this._slow = b;
+		}
+		
+		public function get slow():Boolean
+		{
+			return this._slow;
 		}
 	}
 }

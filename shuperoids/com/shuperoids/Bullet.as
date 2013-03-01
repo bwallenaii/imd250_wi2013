@@ -23,6 +23,15 @@
 			{
 				this.destroy();
 			}
+			for (var i:int = 0; i < Rock.rocks.length;++i)
+			{
+				if (this.hitTestObject(Rock.rocks[i]))
+				{
+					Rock.rocks[i].hit();
+					this.destroy();
+					break;
+				}
+			}
 		}
 		
 		override public function set rotation(n:Number):void
@@ -38,6 +47,11 @@
 		
 		public function destroy(e:* = null):void
 		{
+			if (this.destroyed)
+			{
+				return;
+			}
+			this.destroyed = true;
 			for (var i = 0; i < bullets.length;++i)
 			{
 				if (bullets[i] == this)
@@ -52,3 +66,11 @@
 	}
 
 }
+
+
+
+
+
+
+
+

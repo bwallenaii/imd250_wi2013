@@ -6,10 +6,11 @@ package com.shuperoids
 	{
 		protected var vx:Number = 0;
 		protected var vy:Number = 0;
+		protected var destroyed:Boolean = false;
 		
 		public function GameObject():void
 		{
-			
+			this.mouseEnabled = false;
 		}
 		
 		public function run():void

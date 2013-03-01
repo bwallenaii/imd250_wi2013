@@ -30,6 +30,7 @@ package com.shuperoids
 			this.focusRect = false;
 			this.stage.focus = this;
 			game = this;
+			this.startLevel();
 		}
 		
 		/**
@@ -44,7 +45,23 @@ package com.shuperoids
 			{
 				Bullet.bullets[i].run();
 			}
+			for (i = 0; i < Rock.rocks.length;++i)
+			{
+				Rock.rocks[i].run();
+			}
 			Ship.instance.run();
+			if (Rock.rocks.length == 0)
+			{
+				startLevel();
+			}
+		}
+		
+		private function startLevel():void
+		{
+			for (var i:int = 0; i < 3;++i)
+			{
+				new LargeRock();
+			}
 		}
 		
 		public function keyDown(e:KeyboardEvent):void
@@ -62,6 +79,10 @@ package com.shuperoids
 				case Keyboard.W:
 				case Keyboard.UP:
 					Ship.instance.thrust = true;
+				break;
+				case Keyboard.S:
+				case Keyboard.DOWN:
+					Ship.instance.slow = true;
 				break;
 				default:
 					
@@ -84,6 +105,10 @@ package com.shuperoids
 				case Keyboard.W:
 				case Keyboard.UP:
 					Ship.instance.thrust = false;
+				break;
+				case Keyboard.S:
+				case Keyboard.DOWN:
+					Ship.instance.slow = false;
 				break;
 				default:
 					
