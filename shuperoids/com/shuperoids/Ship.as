@@ -14,10 +14,14 @@ package com.shuperoids
 		private var weapon:Weapon;
 		private var acceleration:Number = 0.5;
 		private var topSpeed:Number = 6;
+		private var startX:Number = 0;
+		private var startY:Number = 0;
 		
 		public function Ship():void
 		{
 			ship = this;
+			this.startX = this.x;
+			this.startY = this.y;
 			this.weapon = new Weapon();
 		}
 		
@@ -56,6 +60,17 @@ package com.shuperoids
 		public function rotateRight():void
 		{
 			this.rotation += this.rotateSpeed;
+		}
+		
+		public function die():void
+		{
+			//return to start
+			this.x = this.startX;
+			this.y = this.startY;
+			this.rotation = 0;
+			this.speed = 0;
+			//decrement lives
+			Game.instance.lives--;
 		}
 		
 		public static function get instance():Ship

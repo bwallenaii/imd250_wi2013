@@ -1,5 +1,6 @@
 package com.shuperoids
 {
+	import com.Main;
 	import flash.display.Sprite;
 	import flash.events.Event;
 	import flash.events.KeyboardEvent;
@@ -54,6 +55,11 @@ package com.shuperoids
 			{
 				startLevel();
 			}
+			
+			if (this.lives < 0)
+			{
+				this.endGame();
+			}
 		}
 		
 		private function startLevel():void
@@ -61,6 +67,28 @@ package com.shuperoids
 			for (var i:int = 0; i < 3;++i)
 			{
 				new LargeRock();
+			}
+		}
+		
+		private function endGame(e:* = null):void
+		{
+			this.removeEventListener(KeyboardEvent.KEY_DOWN, this.keyDown);
+			this.removeEventListener(KeyboardEvent.KEY_UP, this.keyUp);
+			this.removeEventListener(Event.ENTER_FRAME, this.run);
+			this.removeEventListener(MouseEvent.MOUSE_DOWN, this.msDown);
+			this.removeEventListener(MouseEvent.MOUSE_UP, this.msUp);
+			while (Rock.rocks.length > 0)
+			{
+				Rock.rocks[0].destroy();
+			}
+			while (Bullet.bullets.length > 0)
+			{
+				Bullet.bullets[0].destroy();
+			}
+			
+			if (this.parent)
+			{
+				(this.parent as Main).gotoEnd();
 			}
 		}
 		
@@ -124,6 +152,26 @@ package com.shuperoids
 		public function msUp(e:* = null):void
 		{
 			Ship.instance.fire = false;
+		}
+		
+		public function get lives():int
+		{
+			return int(this._lives.text);
+		}
+		
+		public function set lives(n:int):void
+		{
+			this._lives.text = n.toString();
+		}
+		
+		public function get score():int
+		{
+			return int(this._score.text);
+		}
+		
+		public function set score(n:int):void
+		{
+			this._score.text = n.toString();
 		}
 		
 		public static function get instance():Game

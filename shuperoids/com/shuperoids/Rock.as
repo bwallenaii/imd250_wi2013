@@ -7,6 +7,7 @@ package com.shuperoids
 		
 		protected var minSpeed:Number = 0;
 		protected var maxSpeed:Number = 0;
+		protected var pointValue:int = 10;
 		
 		public function Rock():void
 		{
@@ -22,8 +23,20 @@ package com.shuperoids
 			this.speed = (Math.random() * (this.maxSpeed - this.minSpeed)) + this.minSpeed;
 		}
 		
+		override public function run():void
+		{
+			super.run();
+			
+			if (this.hitTestObject(Ship.instance))
+			{
+				Ship.instance.die();
+				this.hit();
+			}
+		}
+		
 		public function hit():void
 		{
+			Game.instance.score += this.pointValue;
 			this.destroy();
 		}
 		
