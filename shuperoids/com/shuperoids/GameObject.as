@@ -1,5 +1,6 @@
 package com.shuperoids
 {
+	import flash.display.DisplayObject;
 	import flash.display.Sprite;
 	
 	public class GameObject extends Sprite
@@ -11,6 +12,11 @@ package com.shuperoids
 		public function GameObject():void
 		{
 			this.mouseEnabled = false;
+			this.mouseChildren = false;
+			if (this.getChildByName("hitSpot"))
+			{
+				this.hitArea = this.getChildByName("hitSpot") as HitSpot;
+			}
 		}
 		
 		public function run():void
@@ -44,6 +50,16 @@ package com.shuperoids
 			return Math.sqrt(csq);
 		}
 		
+		public function distanceBetween(ob1:DisplayObject, ob2:DisplayObject):Number
+		{
+			var a:Number = ob1.x - ob2.x;
+			var b:Number = ob1.y - ob2.y;
+			var asq:Number = a * a;
+			var bsq:Number = b * b;
+			var csq:Number = asq + bsq;
+			return Math.sqrt(csq);
+		}
+		
 		public function set speed(n:Number):void
 		{
 			this.vx = Math.cos(this.rotation * Math.PI / 180) * n;
@@ -55,10 +71,10 @@ package com.shuperoids
 			return Math.atan2(this.vy, this.vx);
 		}
 		
-		/*public function set direction(n:Number):void
+		public function get isDestroyed():Boolean
 		{
-			this.rotation = n;
-		}*/
+			return this.destroyed;
+		}
 	}
 }
 

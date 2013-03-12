@@ -1,5 +1,6 @@
-package com.shuperoids
+﻿package com.shuperoids
 {
+	import com.shuperoids.weapons.*;
 	
 	
 	public class Ship extends GameObject
@@ -22,7 +23,7 @@ package com.shuperoids
 			ship = this;
 			this.startX = this.x;
 			this.startY = this.y;
-			this.weapon = new Weapon();
+			this.weapon = new MachineGun();
 		}
 		
 		override public function run():void
@@ -33,6 +34,10 @@ package com.shuperoids
 			this.slow ? this.slowShip():null;
 			super.run();
 			this.fire ? this.weapon.fire():null;
+			if (this.invincible)
+			{
+				this.shield.alpha *= 0.95;
+			}
 		}
 		
 		public function moveShip():void
@@ -64,11 +69,16 @@ package com.shuperoids
 		
 		public function die():void
 		{
+			if (this.invincible)
+			{
+				return;
+			}
 			//return to start
 			this.x = this.startX;
 			this.y = this.startY;
 			this.rotation = 0;
 			this.speed = 0;
+			this.shield.alpha = 1;
 			//decrement lives
 			Game.instance.lives--;
 		}
@@ -126,6 +136,11 @@ package com.shuperoids
 		public function get slow():Boolean
 		{
 			return this._slow;
+		}
+		
+		public function get invincible():Boolean
+		{
+			return this.shield.alpha > 0.05;
 		}
 	}
 }

@@ -8,7 +8,7 @@
 		protected var rof:Number = 4; //number shots per second
 		protected var timer:Timer;
 		protected var canShoot:Boolean = true;
-		protected var arcWidth:Number = 90;
+		protected var arcWidth:Number = 120;
 
 		public function Weapon()
 		{
@@ -52,8 +52,17 @@
 		{
 			var sh:Ship = Ship.instance;
 			var mouseAngle = this.figureAngle();
-			return (sh.rotation > mouseAngle - (this.arcWidth / 2)
-						&& sh.rotation < mouseAngle + (this.arcWidth / 2));
+			var nosedir = sh.rotation < 0 ? 360 + sh.rotation % 360 : sh.rotation % 360;
+			var leftSide = nosedir - (this.arcWidth / 2);
+			var rightSide = nosedir + (this.arcWidth / 2);
+			
+			mouseAngle = mouseAngle < 0 ? 360 + mouseAngle % 360 : mouseAngle % 360;
+			
+			
+			
+			return ((mouseAngle > leftSide && mouseAngle < rightSide) 
+			|| (mouseAngle + 360 > leftSide && mouseAngle + 360 < rightSide)
+			|| (mouseAngle - 360 > leftSide && mouseAngle - 360 < rightSide));
 		}
 
 	}

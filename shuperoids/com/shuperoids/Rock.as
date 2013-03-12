@@ -1,5 +1,6 @@
 package com.shuperoids
 {
+	import com.greensock.TweenMax;
 	
 	public class Rock extends GameObject
 	{
@@ -8,6 +9,7 @@ package com.shuperoids
 		protected var minSpeed:Number = 0;
 		protected var maxSpeed:Number = 0;
 		protected var pointValue:int = 10;
+		private var rot:Number = 0;
 		
 		public function Rock():void
 		{
@@ -15,6 +17,8 @@ package com.shuperoids
 			rocks.push(this);
 			//add it to the game
 			Game.instance.addChild(this);
+			var color:uint = Game.COLORS[ (Game.instance.level - 1) % Game.COLORS.length ];
+			TweenMax.to(this, 0,  {colorTransform: { tint:color, tintAmount:0.5 }} );
 		}
 		
 		protected function init():void
@@ -27,7 +31,7 @@ package com.shuperoids
 		{
 			super.run();
 			
-			if (this.hitTestObject(Ship.instance))
+			if (this.hitArea.hitTestObject(Ship.instance.hitArea))
 			{
 				Ship.instance.die();
 				this.hit();
@@ -61,6 +65,16 @@ package com.shuperoids
 		public static function get rocks():Vector.<Rock>
 		{
 			return _rocks;
+		}
+		
+		override public function set rotation(n:Number):void
+		{
+			this.rot = n;
+		}
+		
+		override public function get rotation():Number
+		{
+			return this.rot;
 		}
 	}
 }

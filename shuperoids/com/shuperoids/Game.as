@@ -18,11 +18,19 @@ package com.shuperoids
 		public static const BOTTOM_WALL:Number = 400;
 		public static const LEFT_WALL:Number = 0;
 		public static const RIGHT_WALL:Number = 550;
+		public static const EXTRA_ROCKS:int = 2;
+		public static const COLORS:Array = new Array(0x009900,
+													0xFFEE07,
+													0x0A3AC6,
+													0xB11111,
+													0x7D11B1,
+													0xAAAAAA);
 		private static var game:Game;
 		
 		
 		public function Game():void
 		{
+			this.mouseChildren = false;
 			this.addEventListener(KeyboardEvent.KEY_DOWN, this.keyDown);
 			this.addEventListener(KeyboardEvent.KEY_UP, this.keyUp);
 			this.addEventListener(Event.ENTER_FRAME, this.run);
@@ -53,6 +61,7 @@ package com.shuperoids
 			Ship.instance.run();
 			if (Rock.rocks.length == 0)
 			{
+				this.level++;
 				startLevel();
 			}
 			
@@ -64,7 +73,7 @@ package com.shuperoids
 		
 		private function startLevel():void
 		{
-			for (var i:int = 0; i < 3;++i)
+			for (var i:int = 0; i < this.level + EXTRA_ROCKS;++i)
 			{
 				new LargeRock();
 			}
@@ -172,6 +181,16 @@ package com.shuperoids
 		public function set score(n:int):void
 		{
 			this._score.text = n.toString();
+		}
+		
+		public function get level():int
+		{
+			return int(this._level.text);
+		}
+		
+		public function set level(n:int):void
+		{
+			this._level.text = n.toString();
 		}
 		
 		public static function get instance():Game
