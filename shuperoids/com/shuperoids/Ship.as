@@ -22,8 +22,8 @@
 		{
 			ship = this;
 			this.startX = this.x;
-			this.startY = this.y;
-			this.weapon = new MachineGun();
+			this.startY = this.y; 
+			this.weapon = new Weapon();
 		}
 		
 		override public function run():void
@@ -38,6 +38,7 @@
 			{
 				this.shield.alpha *= 0.95;
 			}
+			CrossHair.instance.ready = this.weapon.inSight;
 		}
 		
 		public function moveShip():void
@@ -49,6 +50,33 @@
 			}
 			this.vx += Math.cos(this.rotation * (Math.PI / 180)) * this.acceleration;
 			this.vy += Math.sin(this.rotation * (Math.PI / 180)) * this.acceleration;
+		}
+		
+		public function receiveAward(award:*):void
+		{
+			if (award is Weapon)
+			{
+				this.weapon = award;
+			}
+			else if (award is int)
+			{
+				Game.instance.score += award;
+			}
+			else if (award is String)
+			{
+				switch(award)
+				{
+					case "1up":
+						Game.instance.lives++;
+					break;
+					case "shield":
+						this.shield.alpha = 3;
+					break;
+					default:
+						trace(award);
+					break;
+				}
+			}
 		}
 		
 		public function slowShip():void
@@ -79,6 +107,7 @@
 			this.rotation = 0;
 			this.speed = 0;
 			this.shield.alpha = 1;
+			//this.weapon = new Weapon();
 			//decrement lives
 			Game.instance.lives--;
 		}

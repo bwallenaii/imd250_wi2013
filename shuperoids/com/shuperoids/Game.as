@@ -31,13 +31,13 @@ package com.shuperoids
 		public function Game():void
 		{
 			this.mouseChildren = false;
-			this.addEventListener(KeyboardEvent.KEY_DOWN, this.keyDown);
-			this.addEventListener(KeyboardEvent.KEY_UP, this.keyUp);
+			this.stage.addEventListener(KeyboardEvent.KEY_DOWN, this.keyDown);
+			this.stage.addEventListener(KeyboardEvent.KEY_UP, this.keyUp);
 			this.addEventListener(Event.ENTER_FRAME, this.run);
 			this.addEventListener(MouseEvent.MOUSE_DOWN, this.msDown);
 			this.addEventListener(MouseEvent.MOUSE_UP, this.msUp);
 			this.focusRect = false;
-			this.stage.focus = this;
+			this.stage.focus = this.stage;
 			game = this;
 			this.startLevel();
 		}
@@ -48,8 +48,8 @@ package com.shuperoids
 		 */
 		private function run(e:* = null):void
 		{
-			this.stage.focus = this;
-			
+			CrossHair.instance.x = this.mouseX;
+			CrossHair.instance.y = this.mouseY;
 			for (var i = 0; i < Bullet.bullets.length; i++)
 			{
 				Bullet.bullets[i].run();
@@ -57,6 +57,10 @@ package com.shuperoids
 			for (i = 0; i < Rock.rocks.length;++i)
 			{
 				Rock.rocks[i].run();
+			}
+			for (i = 0; i < Floater.floaters.length;++i)
+			{
+				Floater.floaters[i].run();
 			}
 			Ship.instance.run();
 			if (Rock.rocks.length == 0)

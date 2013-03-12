@@ -8,6 +8,7 @@ package com.shuperoids
 			this.minSpeed = 3;
 			this.maxSpeed = 5;
 			this.pointValue = 27;
+			this.dropChance = 0.18;
 			this.init();
 		}
 	}

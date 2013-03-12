@@ -1,10 +1,13 @@
 package com.shuperoids
 {
 	import com.greensock.TweenMax;
+	import com.shuperoids.floaters.*;
+	import flash.utils.getDefinitionByName;
 	
 	public class Rock extends GameObject
 	{
 		private static var _rocks:Vector.<Rock> = new Vector.<Rock>();
+		protected var dropChance:Number = 0.08;
 		
 		protected var minSpeed:Number = 0;
 		protected var maxSpeed:Number = 0;
@@ -34,14 +37,29 @@ package com.shuperoids
 			if (this.hitArea.hitTestObject(Ship.instance.hitArea))
 			{
 				Ship.instance.die();
-				this.hit();
+				this.destroy();
 			}
 		}
 		
 		public function hit():void
 		{
 			Game.instance.score += this.pointValue;
+			this.checkDrop();
 			this.destroy();
+		}
+		
+		protected function checkDrop():void
+		{
+			var dropSomething:Boolean = Math.random() < this.dropChance;
+			if (dropSomething)
+			{
+				var cls:Class = getDefinitionByName( "com.shuperoids.floaters." + Floater.availableFloaters[Math.floor(Math.random() * Floater.availableFloaters.length)]) as Class;
+				var flt:Floater = new cls();
+				flt.x = this.x;
+				flt.y = this.y;
+				flt.rotation = this.rotation;
+				flt.speed = this.speed;
+			}
 		}
 		
 		public function destroy():void
